@@ -2,7 +2,7 @@
   function Game2048(opt) {
     var prefix = opt.prefix, len = opt.len, size = opt.size, margin = opt.margin;
     var score = 0;
-    var winNum = 128;
+    var winNum = 2048;
     var isGameOver = true;
     var board = new Board(len);
     var view = new View(prefix, len, size, margin);

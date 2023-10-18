@@ -1,188 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>html5实现贪吃蛇小游戏</title>
-<style>
-#myCanvas {
-    box-shadow: 0 0 6px #000;
-}
-</style>
-</head>
-<body>
-<br/><br/><br/>
-<input type="button" value="开始摸鱼" onclick="beginGame();"><br/><br/><br/>
-<canvas id="myCanvas" width="450" height="450"></canvas>
-
-<script>
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var w = 15; //格子宽、高
-var snaLen = 6; //初始长度
-var snake = []; //身体长度
-for (var i = 0; i < snaLen; i++) {
-    snake[i] = new cell(i, 0, 39);
-}
-var head = snake[snaLen - 1]; //头部
-//初始食物
-var foodx = Math.ceil(Math.random() * 28 + 1);
-var foody = Math.ceil(Math.random() * 28 + 1);
-var food = new Food(foodx, foody);
-//食物
-function Food(x, y) {
-    this.x = x;
-    this.y = y;
-    return this;
-}
-
-//身体
-function cell(x, y, d) {
-    this.x = x;
-    this.y = y;
-    this.d = d;
-    return this;
-}
-
-//动作
-function draw() {
-    ctx.clearRect(0, 0, 450, 450);
-    //画布局
-    //      for(var i = 0; i < 30; i++){
-    //          ctx.strokeStyle = "#ccc";//线条颜色
-    //          ctx.beginPath();
-    //          ctx.moveTo(0,i*w);
-    //          ctx.lineTo(450,i*w);
-
-    //          ctx.moveTo(i*w,0);
-    //          ctx.lineTo(i*w,450);
-    //          ctx.closePath();
-    //          ctx.stroke();
-    //      }
-    //画蛇身
-    for (var j = 0; j < snake.length; j++) {
-        ctx.fillStyle = "green";
-        if (j == snake.length - 1) {
-            ctx.fillStyle = "red";
-        }
-        ctx.beginPath();
-        ctx.rect(snake[j].x * w, snake[j].y * w, w, w);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-    }
-    //出现食物
-    drawFood();
-    //吃到食物
-    if (head.x == food.x && head.y == food.y) {
-        initFood();
-        food = new Food(foodx, foody);
-        //重新出现食物
-        drawFood();
-
-        //增加蛇的长度  有些小瑕疵，蛇身增长时应该是身体增长，而不是在蛇头上增长
-        var newCell = new cell(head.x, head.y, head.d);
-        switch (head.d) {
-            case 40:
-                newCell.y++;
-                break; //下
-            case 39:
-                newCell.x++;
-                break; //右
-            case 38:
-                newCell.y--;
-                break; //上
-            case 37:
-                newCell.x--;
-                break; //左
-        }
-        snake[snake.length] = newCell;
-        head = newCell;
-        //head = 
-    }
-}
-//随机初始化食物
-function initFood() {
-    foodx = Math.ceil(Math.random() * 28 + 1);
-    foody = Math.ceil(Math.random() * 28 + 1);
-    for (var i = 0; i < snake.length; i++) {
-        if (snake[i].x == foodx && snake[i].y == foody) {
-            initFood();
-        }
-    }
-}
-//画食物
-function drawFood() {
-    //绘制食物
-    ctx.fillStyle = "orange";
-    ctx.beginPath();
-    ctx.rect(food.x * w, food.y * w, w, w);
-    ctx.closePath();
-    ctx.fill();
-}
-draw();
-//监听键盘事件
-document.onkeydown = function(e) {
-    //下40 ， 右边39，左边37，上38  键盘事件
-    var keyCode = e.keyCode;
-    if (head.d - keyCode != 2 && head.d - keyCode != -2 && keyCode >= 37 && keyCode <= 40) {
-        moveSnake(keyCode);
-    }
-}
-//控制蛇移动方向
-function moveSnake(keyCode) {
-    var newSnake = [];
-    var newCell = new cell(head.x, head.y, head.d); //头
-    //身体
-    for (var i = 1; i < snake.length; i++) {
-        newSnake[i - 1] = snake[i];
-    }
-    newSnake[snake.length - 1] = newCell;
-    newCell.d = keyCode;
-    switch (keyCode) {
-        case 40:
-            newCell.y++;
-            break; //下
-        case 39:
-            newCell.x++;
-            break; //右
-        case 38:
-            newCell.y--;
-            break; //上
-        case 37:
-            newCell.x--;
-            break; //左
-    }
-    snake = newSnake;
-    head = snake[snake.length - 1];
-    checkDeath();
-    draw();
-}
-//游戏规则
-function checkDeath() {
-    //超出边框
-    if (head.x >= 30 || head.y >= 30 || head.x < 0 || head.y < 0) {
-        alert("Game over!");
-        window.location.reload();
-    }
-    //咬到自己
-    for (var i = 0; i < snake.length - 1; i++) {
-        if (head.x == snake[i].x && head.y == snake[i].y) {
-            alert("Game over!");
-            window.location.reload();
-        }
-    }
-}
-//蛇自动走
-function moveClock() {
-    moveSnake(head.d);
-}
-var isMove = false;
-function beginGame() {
-    !isMove && setInterval(moveClock, 300);
-    isMove = true;
-}
-
-</script>
-
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>网页版2048游戏</title>
+    <style>
+      /* 游戏棋盘格 */
+      body{font-family:Arial;text-align:center;}
+      .game{margin:0 auto;/*margin-top:40px;*/text-align:center;display:inline-block;}
+      .game-score{font-size:20px;margin:20px auto;}
+      .game-container{background-color:#bbada0;border-radius:10px;position:relative;}
+      .game-cell{border-radius:6px;background-color:#ccc0b3;position:absolute;}
+      .game-num{width:0px;height:0px;border-radius:6px;font-weight:bold;font-size:40px;color:#fff;text-align:center;position:absolute;}
+      .game-num-2{background:#eee4da;color:#776e65;}
+      .game-num-4{background:#ede0c8;color:#776e65;}
+      .game-num-8{background:#f2b179;}
+      .game-num-16{background:#f59563;}
+      .game-num-32{background:#f67c5f;}
+      .game-num-64{background:#f65e3b;}
+      .game-num-128{background:#edcf72;font-size:35px;}
+      .game-num-256{background:#edcc61;font-size:35px;}
+      .game-num-512{background:#9c0;font-size:35px;}
+      .game-num-1024{background:#33b5e5;font-size:30px;}
+      .game-num-2048{background:#09c;font-size:30px;}
+      /*游戏结束*/
+      .game-over{width:100%;height:100%;position:absolute;border-radius:10px;box-sizing:border-box;z-index:1;display:table;background:rgba(123,102,85,0.5)}
+      .game-over-info{display:table-cell;vertical-align:middle}
+      .game-over p{font-size:45px;color:#fff;margin:20px auto;}
+      .game-over span{cursor:pointer;background-color:rgba(103,82,65,0.6);display:block;margin:20px auto;width:180px;padding:10px 10px;font-size:25px;color:#f7f2e5;border-radius:10px;border:1px solid #978271;transition:all .2s}
+      .game-over span:hover{background-color:rgba(103,82,65,0.7);color:#fff}
+      .game-hide{display:none;}
+    </style>
+    <h1>
+      welcome to kingback.fun!
+      </h1>
+  </head>
+  <body>
+    <div id="game" class="game">
+      <div class="game-score">分数：<span id="game_score">0</span></div>
+      <div id="game_container" class="game-container">
+        <div id="game_over" class="game-over game-hide">
+          <div class="game-over-info">
+            <div id="game_over_info"></div>
+            <span id="game_restart">重新开始</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script src="Game2048.js"></script>
+    <script>
+      Game2048({prefix: 'game', len: 4, size: 100, margin: 20});
+    </script>
+  </body>
 </html>

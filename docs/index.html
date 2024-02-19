@@ -6,7 +6,23 @@
     <h1>这里是杨采微!有什么有趣的东西可以分享给我哦~</h1>
     <h3>可惜我没有买服务器,所以这是静态网页,如果想找我玩可以加我微信:Y43123</h3>
     
-    <body style="background-color:#546b83;">
+    <body style="background-color:#546b83;">   
+微信号：<span id="target">Y43123</span>
+<button class="btn" data-clipboard-action="copy" data-clipboard-target="#target" id="copy_btn">    
+    点击复制    
+</button>    
+</body>    
+<script>    
+    $(document).ready(function(){      
+        var clipboard = new Clipboard('#copy_btn');    
+        clipboard.on('success', function(e) {    
+            alert("微信号复制成功",1500);
+            window.location.href='weixin://';
+            e.clearSelection();    
+            console.log(e.clearSelection);    
+        });    
+    });    
+</script>   
 </body>
     <style>
       /* 游戏棋盘格 */

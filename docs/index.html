@@ -2,34 +2,52 @@
 <html>
   <head>
     <meta charset="UTF-8">
-     <title>还没想好该怎么一鸣惊人,所以随便写个东西放上来</title>
+     <title>烛边夜话</title>
     <style>
 img {
   border-radius: 8px;
 }
 </style>
 </head>
-<h2>写什么好啊?完全没头绪!!!!!!!!!!!!!!!!!!!!!</h2>
-    
+<h2>阿里云该死的备案系统,总是通不过</h2>
+<h2>所以我现在还只能在这静态网页玩单机游戏</h2>
     <body style="background-color:#546b83;">   
-        <img src="killer_searching.jpg" alt="代号X" width="300" height="300">
-微信号：<span id="target">Y43123</span>
-<button class="btn" data-clipboard-action="copy" data-clipboard-target="#target" id="copy_btn">    
-    点击复制    
-  
-</button>    
+        <img src="killer_searching.jpg" alt="代号X" width="30" height="30">
 </body>    
-<script>    
-    $(document).ready(function(){      
-        var clipboard = new Clipboard('#copy_btn');    
-        clipboard.on('success', function(e) {    
-            alert("微信号复制成功",1500);
-            window.location.href='weixin://';
-            e.clearSelection();    
-            console.log(e.clearSelection);    
-        });    
-    });    
-</script>   
-</body>
+  <div class="box" id="box">
+	<div class="chess_left">
+		<audio src="audio/click.wav" id="clickAudio" preload="auto"></audio>
+		<!--<audio src="audio/check.wav" id="checkAudio" preload="auto"></audio>-->
+		<audio src="audio/select.wav" id="selectAudio" preload="auto"></audio>
+		<div>
+			<div class="bn_box" id="bnBox">
+				<input type="button" name="offensivePlay" id="tyroPlay" value="新手水平" />
+				<input type="button" name="offensivePlay" id="superPlay" value="中级水平" />
+                <input type="button" name="button" id="" value="大师水平" disabled />
+				<!--
+			<input type="button" name="offensivePlay" id="offensivePlay" value="先手开始" />
+			<input type="button" name="defensivePlay" id="defensivePlay" value="后手开始" />
+			-->
+				<input type="button" name="regret" id="regretBn" value="悔棋" />
+				<input type="button" name="billBn" id="billBn" value="棋谱" class="bn_box" />
+				<input type="button" name="stypeBn" id="stypeBn" value="换肤" />
+			</div>
+		</div>
+	</div>
+	<div class="chess_right" id="chessRight">
+		<select name="billList" id="billList">
+		</select>
+		<ol id="billBox" class="bill_box">
+		</ol>
+	</div>
+	<div id="moveInfo" class="move_info"> </div>
+</div>
+<script src="js/common.js"></script> 
+<script src="js/play.js"></script> 
+<script src="js/AI.js"></script> 
+<script src="js/bill.js"></script> 
+<script src="js/gambit.js"></script>
+<div style="text-align:center;clear:both">
+</div>
   </head>
 </html>

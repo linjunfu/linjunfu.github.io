@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+  <title>英文、中英文地图</title>
+  <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+   <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+  <style>
+    html,
+    body,
+    #container {
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="container"></div>
+<div class="input-card">
+    <h4>左击获取经纬度：</h4>
+    <div class="input-item">
+      <input type="text" readonly="true" id="lnglat">
+    </div>
+</div>
+
+  <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+  <script src="https://webapi.amap.com/maps?v=2.0&key=e47fb0fe7d3e19677a99754a9c863c7d"></script>
+  <script>
+    //初始化地图，直接设置默认主题为靛青蓝
+  </script>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        zoom: 11,
+  mapStyle: "amap://styles/blue",
+    });
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    map.on('click', function(e) {
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+    });
+</script>
+
+</body>
+
+</html>
